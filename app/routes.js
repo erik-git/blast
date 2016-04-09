@@ -40,6 +40,18 @@ module.exports = function(router) {
 	router.route('/user/register')
 		.post(users.register);
 
+	router.route('/userbyname/:name')
+		.get(users.getUserByName);
+
+	router.route('/userbyphone/:phone')
+		.get(users.getUserByPhone);
+
+	router.route('/updatepassword/:id')
+		.post(users.updatePassword);
+
+	router.route('/userByPhone')
+		.get(users.getUserByPhone);
+
 	router.route('/user/:id')
 		.get(users.getUserById);
 

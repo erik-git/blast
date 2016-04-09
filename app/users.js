@@ -44,6 +44,7 @@ exports.register = function(req, res){
         var newUser = new User({
             name:req.body.name,
             password:req.body.password,
+            phonenumber:req.body.phone,
             token:req.body.token
         });
         newUser.save(function(err, data){
@@ -62,21 +63,50 @@ exports.register = function(req, res){
 }
 
 exports.getUserById = function(req, res){
-    User.findById(req.params.id, function(err, user){
+    User.find(req.params.id, function(err, user){
         if (err) return
         res.json(user)
     })
 }
 
+exports.getUserByName = function(req, res){
+    User.find({"name": req.params.name}, function(err, users){
+        if (err) return
+        res.json(users)
+    })
+}
+
+exports.getUserByPhone = function(req, res){
+    User.find({"phonenumber": req.params.phone}, function(err, users){
+        if (err) return
+        res.json(users)
+    })
+}
+
+exports.updatePassword = function(req, res){
+
+    User.findById(req.params.id, function(err, user){
+        if (err) return
+        user.password = req.body.password
+        user.save(function(error, data){
+            if (error) {
+                res.json({status:'error'})   
+                return
+            }
+            res.json({status:'success'})
+        })
+    })
+}
+
 exports.updateUserInfoById = function(req, res){
-    if (req.query['name'] == '' || req.query['password'] == ''){
+    if (req.body['name'] == '' || req.body['password'] == ''){
         return
     }
 
-    User.findById(req.query.id, function(err, user){
+    User.findById(req.params.id, function(err, user){
         if (err) return
-        user.name = req.query.name
-        user.password = req.query.password
+        user.name = req.body.name
+        user.password = req.body.password
         user.save(function(error, data){
             if (error) {
                 res.json({status:'error'})   

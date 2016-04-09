@@ -16,7 +16,7 @@
 <script>
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope, $http) {
-  $http.post("http://localhost:8080/api/blast/5701da3dbcada6b871282221", {"title": "aa", "content": "bb", "imageURL": "cc", "status": 2})
+  $http.post("http://localhost:8080/api/user/login", {"name": "a", "password": "ddd"})
   .then(function(response) {
       $scope.myWelcome = response.data;
   });

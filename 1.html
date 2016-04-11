@@ -16,8 +16,8 @@
 <script>
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope, $http) {
-  $http.post("http://localhost:8080/api/updatepassword/5708b7928bec72b03f14997c", {"password": "zxcvbnm"})
-  //$http.get("http://localhost:8080/api/userbyinfo/wwq/+8615041577101")
+  //$http.post("http://localhost:8080/api/user/register", {"name":"test11", "password": "aaaaaa", "phone":"77"})
+  $http.get("http://localhost:8080/api/userbyinfo/test11/77")
   .then(function(response) {
       $scope.myWelcome = response.data;
   });

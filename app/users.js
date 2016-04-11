@@ -44,7 +44,7 @@ exports.register = function(req, res){
         var newUser = new User({
             name:req.body.name,
             password:req.body.password,
-            phonenumber:req.body.phone,
+            phonenumber:req.body.phonenumber,
             token:req.body.token
         });
         newUser.save(function(err, data){

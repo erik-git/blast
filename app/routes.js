@@ -1,7 +1,7 @@
 var mongoose   = require('mongoose');
 //mongoose.connect('mongodb://localhost:27017');
 mongoose.connect('mongodb://alex:mongoalex888@ec2-54-175-84-4.compute-1.amazonaws.com:27017/blastDB')
-
+console.log('wef');
 var db = mongoose.connection;
 	db.on('error', function(err){
 		console.log('BlastDB connection failed with error:', err);
@@ -52,9 +52,6 @@ module.exports = function(router) {
 
 	router.route('/updatepassword/:id')
 		.post(users.updatePassword);
-
-	router.route('/userByPhone')
-		.get(users.getUserByPhone);
 
 	router.route('/user/:id')
 		.get(users.getUserById);

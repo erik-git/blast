@@ -90,8 +90,10 @@ exports.getUserByPhone = function(req, res){
 }
 
 exports.getUserByInfo = function(req, res){
-    User.find({"name": req.params.name, "phonenumber": req.params.phone}, function(err, users){
+    console.log({"name": req.params.name, "phonenumber": req.params.phone});
+    User.find({}, function(err, users){
         if (err) return;
+        console.log(JSON.stringify(users));
         if(users.length == 0)
             res.json({"exist": false});
         else

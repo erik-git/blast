@@ -5,14 +5,14 @@ var _=require('underscore-node')
 
 exports.login = function(req, res){
     if (req.body['name'] == '' || req.body['password'] == ''){
-        return
+        return;
     }
     User.find({name:req.body.name}, function(err, user) {
-        if (err) return
+        if (err) return;
         // object of the user
         if (user.length == 0 || user == undefined || user == null) {
-            res.json({status:'error', username_exist:true, password_wrong:false});
-            return
+            res.json({status:'error', username_exist:false, password_wrong:false});
+            return;
         }
         if(user[0].password == req.body.password){
             user[0].token = req.body.token
@@ -22,11 +22,11 @@ exports.login = function(req, res){
             var result = {
                 status:'success',
                 userid:user[0]._id
-            }
-            res.json(result)
+            };
+            res.json(result);
         } 
         else{
-            res.json({status:'error', username_exist:false, password_wrong:true})
+            res.json({status:'error', username_exist:true, password_wrong:true});
         }
     })
 }
@@ -34,12 +34,12 @@ exports.login = function(req, res){
 exports.register = function(req, res){
     checkUserInfoValid(req, function(result){
         if (result.status == 'error') {
-            res.json(result)
-            return
+            res.json(result);
+            return;
         }
 
         if (req.body.name == '' || req.body.password == ''){
-            return
+            return;
         }
         var newUser = new User({
             name:req.body.name,
@@ -49,14 +49,14 @@ exports.register = function(req, res){
         });
         newUser.save(function(err, data){
             if (err) {
-                console.log("Creating New User error")
-                return
+                console.log("Creating New User error");
+                return;
             }else{
                 var newResult = {
                     status:result.status,
                     userID:newUser._id
-                }
-                res.json(newResult)
+                };
+                res.json(newResult);
             }
         })
     })
@@ -64,69 +64,91 @@ exports.register = function(req, res){
 
 exports.getUserById = function(req, res){
     User.find(req.params.id, function(err, user){
-        if (err) return
-        res.json(user)
+        if (err) return;
+        res.json(user);
     })
 }
 
 exports.getUserByName = function(req, res){
     User.find({"name": req.params.name}, function(err, users){
-        if (err) return
-        res.json(users)
+        if (err) return;
+        if(users.length == 0)
+            res.json({"exist": false});
+        else
+            res.json({"exist": true});
     })
 }
 
 exports.getUserByPhone = function(req, res){
     User.find({"phonenumber": req.params.phone}, function(err, users){
-        if (err) return
-        res.json(users)
-    })
+        if (err) return;
+        if(users.length == 0)
+            res.json({"exist": false});
+        else
+            res.json({"exist": true});
+    });
+}
+
+exports.getUserByInfo = function(req, res){
+    User.find({"name": req.params.name, "phonenumber": req.params.phone}, function(err, users){
+        if (err) return;
+        if(users.length == 0)
+            res.json({"exist": false});
+        else
+        {
+            var newResult = {
+                    "exist":true,
+                    "userID":users[0]._id
+                };
+            res.json(newResult);
+        }
+    });
 }
 
 exports.updatePassword = function(req, res){
 
     User.findById(req.params.id, function(err, user){
-        if (err) return
-        user.password = req.body.password
+        if (err) return;
+        user.password = req.body.password;
         user.save(function(error, data){
             if (error) {
-                res.json({status:'error'})   
-                return
+                res.json({status:'error'});
+                return;
             }
-            res.json({status:'success'})
-        })
-    })
+            res.json({status:'success'});
+        });
+    });
 }
 
 exports.updateUserInfoById = function(req, res){
     if (req.body['name'] == '' || req.body['password'] == ''){
-        return
+        return;
     }
 
     User.findById(req.params.id, function(err, user){
-        if (err) return
-        user.name = req.body.name
-        user.password = req.body.password
+        if (err) return;
+        user.name = req.body.name;
+        user.password = req.body.password;
         user.save(function(error, data){
             if (error) {
-                res.json({status:'error'})   
-                return
+                res.json({status:'error'});  
+                return;
             }
             res.json({status:'success'})
-        })
-    })
+        });
+    });
 }
 
 function checkUserInfoValid(req, callback){
     User.find({name:req.body.name}, function(err, user){
         if (err){
             callback({status:'error'})
-            return
+            return;
         }
         if (user.length != 0){
             callback({status:'error', username_exist:true})
-            return
+            return;
         }        
         callback({status:'success'})
-    })
+    });
 }

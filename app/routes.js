@@ -46,6 +46,9 @@ module.exports = function(router) {
 	router.route('/userbyphone/:phone')
 		.get(users.getUserByPhone);
 
+	router.route('/userbyinfo/:name/:phone')
+		.get(users.getUserByInfo);
+
 	router.route('/updatepassword/:id')
 		.post(users.updatePassword);
 

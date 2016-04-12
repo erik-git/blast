@@ -44,8 +44,7 @@ exports.register = function(req, res){
         var newUser = new User({
             name:req.body.name,
             password:req.body.password,
-            phonenumber:req.body.phonenumber,
-            token:req.body.token
+            phonenumber:req.body.phonenumber
         });
         newUser.save(function(err, data){
             if (err) {
@@ -90,10 +89,10 @@ exports.getUserByPhone = function(req, res){
 }
 
 exports.getUserByInfo = function(req, res){
-    console.log({"name": req.params.name, "phonenumber": req.params.phone});
-    User.find({}, function(err, users){
+    //console.log({"name": req.params.name, "phonenumber": req.params.phone});
+    User.find({"name": req.params.name, "phonenumber": req.params.phone}, function(err, users){
         if (err) return;
-        console.log(JSON.stringify(users));
+        //console.log(JSON.stringify(users));
         if(users.length == 0)
             res.json({"exist": false});
         else

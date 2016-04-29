@@ -8,7 +8,7 @@ var blastSchema = new Schema({
   imageURL: String,
   created: Date,
   lifetime: Number,
-  status: Number
+  status: String
 }, {collection: 'blasts' });
 
 module.exports = mongoose.model('Blasts', blastSchema);

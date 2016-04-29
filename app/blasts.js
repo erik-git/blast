@@ -6,7 +6,7 @@ var _=require('underscore-node')
 
 exports.createBlast = function(req, res){
 
-    if (req.body.title == '' || req.body.content == ''){
+    if (req.body.imageURL == '' || req.body.userID == ''){
         return;
     }
     var newBlast = new Blast({
@@ -21,9 +21,11 @@ exports.createBlast = function(req, res){
     newBlast.save(function(err, data){
         if (err) {
             console.log("Creating New Blast error")
-            return
+            res.json({status: 'error'});
+            return;
         }else{
             var newResult = {
+                status:'success',
                 blastID:newBlast._id
             }
             res.json(newResult)
@@ -32,7 +34,7 @@ exports.createBlast = function(req, res){
 }
 
 exports.getBlasts = function(req, res){
-    Blast.find({}, function(err, blasts){
+    Blast.find({$ne: {lifetime: 0}}).sort({created: -1}).exec(function(err, blasts){
         if (err) return;
         res.json(blasts);
     })
@@ -51,7 +53,7 @@ exports.updateBlastById = function(req, res){
         return;
     }
     Blast.findById(req.params.id, function(err, blast){
-        if (err) return
+        if (err) return;
         blast.title = req.body.title;
         blast.content = req.body.content;
         blast.status = req.body.status;
@@ -59,7 +61,7 @@ exports.updateBlastById = function(req, res){
         blast.save(function(error, data){
             if (error) {
                 res.json({status:'error'})   
-                return
+                return;
             }
             res.json({status:'success'})
         })

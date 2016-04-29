@@ -18,7 +18,8 @@ var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope, $http) {
   //$http.post("http://localhost:8080/api/user/register", {"name":"test", "password": "aaaaaa", "phonenumber":"777"})
   //$http.get("http://localhost:8080/api/userbyinfo/aaa/+4400")
-  $http.post("http://localhost:8080/api/blast", {"imageURL":"temp.png", "userID":"testuser", "status":"normal"})
+  //$http.post("http://localhost:8080/api/blast", {"imageURL":"temp.png", "userID":"testuser", "status":"normal"})
+  $http.get("http://localhost:8080/api/blasts")
   .then(function(response) {
       $scope.myWelcome = response.data;
   });

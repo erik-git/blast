@@ -34,9 +34,19 @@ exports.createBlast = function(req, res){
 }
 
 exports.getBlasts = function(req, res){
-    Blast.find({$ne: {lifetime: 0}}).sort({created: -1}).exec(function(err, blasts){
-        if (err) return;
-        res.json(blasts);
+    Blast.find({lifetime: {$ne: 0}}).sort({created: -1}).exec(function(err, blasts){
+        console.log(JSON.stringify(err));
+        if (err) {
+            res.json({status: 'error'});
+            return;
+        }
+        else {
+            var newResult = {
+                status: 'success',
+                blasts: blasts
+            }
+            res.json(newResult);
+        }
     })
 }
 

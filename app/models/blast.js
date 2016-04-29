@@ -2,7 +2,7 @@ var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
 var blastSchema = new Schema({
-  title: String,
+  type: Number,
   content: String,
   userID: String,
   imageURL: String,

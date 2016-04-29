@@ -10,7 +10,7 @@ exports.createBlast = function(req, res){
         return;
     }
     var newBlast = new Blast({
-        title: req.body.title,
+        type: req.body.type,
         content: req.body.content,
         userID: req.body.userID,
         status: req.body.status,
@@ -59,12 +59,12 @@ exports.getBlastById = function(req, res){
 
 exports.updateBlastById = function(req, res){
 
-    if (req.body.title == '' || req.body.content == ''){
+    if (req.body.imageURL == '' || req.body.userID == ''){
         return;
     }
     Blast.findById(req.params.id, function(err, blast){
         if (err) return;
-        blast.title = req.body.title;
+        blast.type = req.body.type;
         blast.content = req.body.content;
         blast.status = req.body.status;
         blast.imageURL = req.body.imageURL;

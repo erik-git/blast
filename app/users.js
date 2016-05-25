@@ -1,5 +1,6 @@
 var express = require('express')
 var app = express()
+var Blast = require('./models/blast.js')
 var User = require('./models/user.js')
 var _=require('underscore-node')
 
@@ -151,5 +152,48 @@ function checkUserInfoValid(req, callback){
             return;
         }        
         callback({status:'success'})
+    });
+}
+
+exports.addPinnedBlast = function(req, res){
+    console.log(req.params.userID);
+    console.log(req.params.blastID);
+
+    User.findById(req.params.userID, function(err, user) {
+        if(err) return;
+        user.pinned.push(req.params.blastID);
+        user.save(function(error, data){
+            if (error) {
+                res.json({status:'error'});  
+                return;
+            }
+            res.json({status:'success'})
+        });
+    });
+}
+
+exports.removePinnedBlast = function(req, res){
+    console.log(req.params.userID);
+    console.log(req.params.blastID);
+
+    User.findById(req.params.userID, function(err, user) {
+        if(err) return;
+        var index_to_remove = -1;
+        for(var i=0; i<user.pinned.length; i++) {
+            if(blastid === req.params.blastID) {
+                index_to_remove = i;
+            }
+        };
+        if(index_to_remove != -1) {
+            user.pinned.splice(index_to_remove, 1);
+        }
+        
+        user.save(function(error, data){
+            if (error) {
+                res.json({status:'error'});  
+                return;
+            }
+            res.json({status:'success'})
+        });
     });
 }

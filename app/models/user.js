@@ -5,7 +5,8 @@ var userSchema = new Schema({
   name:String,
   password:String,
   token:String,
-  phonenumber:String
+  phonenumber:String,
+  pinned: [String]
 }, {collection: 'users' });
 
 module.exports = mongoose.model('Users', userSchema);

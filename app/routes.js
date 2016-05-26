@@ -59,6 +59,24 @@ module.exports = function(router) {
 	router.route('/user/:id')
 		.put(users.updateUserInfoById);
 
+	router.route('/addPinned/:userID/:blastID')
+		.post(users.addPinnedBlast);
+
+	router.route('/removePinned/:userID/:blastID')
+		.post(users.removePinnedBlast);
+
+	router.route('/addUpvoted/:userID/:blastID')
+		.post(users.addUpvotedBlast);
+
+	router.route('/removeUpvoted/:userID/:blastID')
+		.post(users.removeUpvotedBlast;
+
+	router.route('/addDownvotedBlast/:userID/:blastID')
+		.post(users.addDownvotedBlast);
+
+	router.route('/removeDownvotedBlast/:userID/:blastID')
+		.post(users.removeDownvotedBlast);
+
 	router.route('/blast')
 		.post(blasts.createBlast);
 

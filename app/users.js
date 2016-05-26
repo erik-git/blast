@@ -167,7 +167,7 @@ exports.addPinnedBlast = function(req, res){
                 res.json({status:'error'});  
                 return;
             }
-            res.json({status:'success'})
+            res.json({status:'success'});
         });
     });
 }
@@ -186,6 +186,92 @@ exports.removePinnedBlast = function(req, res){
         };
         if(index_to_remove != -1) {
             user.pinned.splice(index_to_remove, 1);
+        }
+        
+        user.save(function(error, data){
+            if (error) {
+                res.json({status:'error'});  
+                return;
+            }
+            res.json({status:'success'})
+        });
+    });
+}
+
+exports.addUpvotedBlast = function(req, res){
+    console.log(req.params.userID);
+    console.log(req.params.blastID);
+
+    User.findById(req.params.userID, function(err, user){
+        if(err) return;
+        user.upvoted.push(req.params.blastID);
+        user.save(function(error, data){
+            if(error){
+                res.json({status: 'error'});
+                return;
+            }
+            res.json({status: 'success'});
+        });
+    });
+}
+
+exports.removeUpvotedBlast = function(req, res){
+    console.log(req.params.userID);
+    console.log(req.params.blastID);
+
+    user.findById(req.params.userID, function(err, user){
+        if(err) return;
+        var index_to_remove = -1;
+        for(var i=0; i<user.upvoted.length; i++) {
+            if(blastid === req.params.blastID) {
+                index_to_remove = i;
+            }
+        };
+        if(index_to_remove != -1) {
+            user.upvoted.splice(index_to_remove, 1);
+        }
+        
+        user.save(function(error, data){
+            if (error) {
+                res.json({status:'error'});  
+                return;
+            }
+            res.json({status:'success'})
+        });
+    });
+}
+
+exports.addDownvotedBlast = function(req, res){
+    console.log(req.params.userID);
+    console.log(req.params.blastID);
+    
+    User.findById(req.params.userID, function(err, user){
+        if(err) return;
+        user.downvoted.push(req.params.blastID);
+        user.save(function(error, data){
+            if(error){
+                res.json({status: 'error'});
+                return;
+            }
+            res.json({status: 'success'});
+        });
+    });
+}
+
+exports.removeDownvotedBlast = function(req, res){
+    console.log(req.params.userID);
+    console.log(req.params.blastID);
+
+    user.findById(req.params.userID, function(err, user){
+        if(err) return;
+        var index_to_remove = -1;
+        for(var i=0; i<user.downvoted.length; i++) {
+            if(blastid === req.params.blastID) {
+                index_to_remove = i;
+            }
+        };
+        if(index_to_remove != -1) {
+            user.downvoted.splice(index_to_remove, 1);
         }
         
         user.save(function(error, data){

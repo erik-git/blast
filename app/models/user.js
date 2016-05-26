@@ -6,7 +6,9 @@ var userSchema = new Schema({
   password:String,
   token:String,
   phonenumber:String,
-  pinned: [String]
+  pinned: [String],
+  upvoted: [String],
+  downvoted: [String]
 }, {collection: 'users' });
 
 module.exports = mongoose.model('Users', userSchema);

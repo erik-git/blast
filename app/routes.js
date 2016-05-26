@@ -69,7 +69,7 @@ module.exports = function(router) {
 		.post(users.addUpvotedBlast);
 
 	router.route('/removeUpvoted/:userID/:blastID')
-		.post(users.removeUpvotedBlast;
+		.post(users.removeUpvotedBlast);
 
 	router.route('/addDownvotedBlast/:userID/:blastID')
 		.post(users.addDownvotedBlast);
